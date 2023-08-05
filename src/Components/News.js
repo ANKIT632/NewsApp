@@ -1,8 +1,11 @@
 
 import React, { Component } from 'react'
 import NewsItem from './NewsItem'
+import Spinner from './Spinner';
+import PropTypes from 'prop-types'
 
 export default class News extends Component {
+
 //  articles=  [
 //   {
 //       "source": {
@@ -32,63 +35,102 @@ export default class News extends Component {
 //   }, 
   
 // ]
+
+static defaultProps={
+  country:'in',
+  pageSize :8,
+  category:'general'
+}
+static propTypes={
+  country : PropTypes.string,
+  pageSize: PropTypes.number,
+  category:PropTypes.string,
+}
+
   constructor(){
+
+    // first call constructor then call componentDidMount.
+    
     super();
   this.state={
     // articles : this.articles,
     articles : [],
-    loading : true
+    loading : false,
+    page:1
   }
   console.log(this.state);
 }
 
 async componentDidMount(){
-  let url="https://newsapi.org/v2/top-headlines?country=in&apiKey=a31190680ad043ef938f39cd742fb8c6&page=1";
+  // pageSize show number of item per page.
+
+  let url=`https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=a31190680ad043ef938f39cd742fb8c6&page=1&pageSize=${this.props.pageSize}`;
+
+  this.setState({loading: true})
   let data = await fetch(url);
 
   let parsedData=await data.json();
-  this.setState({articles : parsedData.articles})
-
+  this.setState({articles : parsedData.articles,
+    totalResults:parsedData.totalResults,
+     loading : false
+  })
+  
 }
 
  handlePrevClick= async()=>{
+  console.log("prev")
+  let url=`https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=a31190680ad043ef938f39cd742fb8c6&page=${this.state.page-1}&pageSize=${this.props.pageSize}`;
 
-  let url=`https://newsapi.org/v2/top-headlines?country=in&apiKey=a31190680ad043ef938f39cd742fb8c6&page=${this.state.page-1}`;
-
+  this.setState({loading: true})
   let data = await fetch(url);
 
   let parsedData=await data.json();
+
   this.setState({
     page: this.state.page-1,
-       articles:parsedData.articles
+    articles:parsedData.articles,
+    loading: false
   })
 }
 
- handleNextClick=async ()=>{
+ handleNextClick=async()=>{
+  console.log("next")
+  // literal
 
-let url=`https://newsapi.org/v2/top-headlines?country=in&apiKey=a31190680ad043ef938f39cd742fb8c6&page=${this.state.page+1}`;
+  // if page size are not greater than original size.
+  if(!(this.state.page+1>Math.ceil(this.state.totalResults/this.props.pageSize))){ 
 
+let url=`https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=a31190680ad043ef938f39cd742fb8c6&page=${this.state.page+1}&pageSize=${this.props.pageSize}`;
+
+this.setState({loading: true})
   let data = await fetch(url);
 
   let parsedData=await data.json();
 
+  
+   console.log(parsedData)
   this.setState({
        page: this.state.page+1,
-       articles: parsedData.articles
-  })
+       articles: parsedData.articles,
+       loading: false
+  })}
 } 
 
   render() {
     return (
       <div className='container my-3'>
-         <h3>NewsLite : Top HeadLine</h3>
+         <h2>NewsLite : Top HeadLine</h2>
+         {this.state.loading&&<Spinner/>}
          <div className='row'>
                   {
-                    this.state.articles.map((element)=>{
+                    // if loading is true then not show anything.
+                    !this.state.loading && this.state.articles.map((element)=>{
                       // whenEver return in map use pass unique key in root tag, and similary pass in child tag unique
-                      return (  <div  key={element.url}  className='col-md-4'>
+                      return (  <div  className="col-md-4" key={element.url} >
 
-                      <NewsItem title={element.title?element.title.slice(0,45):""} des={element.description?element.description.slice(0,88):""} imgUrl={element.urlToImage} newsUrl={element.url} />
+                   {/* display fixed amount  */}
+                      
+                      <NewsItem title={element.title?element.title.slice(0,45):""} des={element.description?element.description.slice(0,88):""} imgUrl={element.urlToImage} newsUrl={element.url} author={element.author} date={element.publishedAt} />
                       </div>)
                     })
                   }
@@ -99,8 +141,12 @@ let url=`https://newsapi.org/v2/top-headlines?country=in&apiKey=a31190680ad043ef
         </div>
 
         <div className='container d-flex justify-content-between'>
+
+          {/* disabled={this.state.page<=1} button is disabled when page  size is less than 1 */}
           <button disabled={this.state.page<=1} type="button" className='btn btn-dark' onClick={this.handlePrevClick}>&larr; previous</button>
-          <button type="button" className='btn btn-dark' onClick={this.handleNextClick}>next &rarr;</button>
+
+          <button disabled={this.state.page+1>Math.ceil(this.state.totalResults/this.props.pageSize)} type="button" className="btn btn-dark"onClick={this.handleNextClick}>next &rarr;</button>
+      
         </div>
        
       </div>
@@ -110,3 +156,5 @@ let url=`https://newsapi.org/v2/top-headlines?country=in&apiKey=a31190680ad043ef
     )
   }
 }
+
+// Note page means Total number of page and pageSize means total number of item display per page 
