@@ -17,11 +17,11 @@ export class NewsItem extends Component {
             
 {/*  new Date(date).toGMTString() convert iso format to GMT format */}
 
-            <p className="card-text"><small class="text-muted">By {author?author:"Unknown"} on {new Date(date).toGMTString()}</small></p>
+            <p className="card-text"><small className="text-muted">By {author?author:"Unknown"} on {new Date(date).toGMTString()}</small></p>
 
         {/* btn-sm (small size of button) */}
         {/* target="_blank" open in new tab  */}
-        
+
             <a  rel="noreferrer" href={newsUrl} target="_blank" className="btn btn-sm btn-dark">read More</a>
             </div>
             </div>
