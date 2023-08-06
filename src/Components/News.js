@@ -31,23 +31,28 @@ export default class News extends Component {
       page: 1,
       totalResults :0
     }
-    console.log(this.state);
+  
   }
 
   async updateNews() {
+    this.props.setProgress(10)
     let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=a31190680ad043ef938f39cd742fb8c6&page=${this.state.page}&pageSize=${this.props.pageSize}`;
 
     this.setState({ loading: true })
+
+    this.props.setProgress(30)
     let data = await fetch(url);
 
     let parsedData = await data.json();
+
+    this.props.setProgress(70)
     this.setState({
       articles: parsedData.articles,
       totalResults: parsedData.totalResults,
-      loading: false,
-   
-  
+      loading: false
+     
     })
+    this.props.setProgress(100);
     
   }
 
@@ -60,6 +65,8 @@ export default class News extends Component {
  
 
   fetchMoreData = async () => {
+
+    this.setState({page : this.state.page+1})
     let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=a31190680ad043ef938f39cd742fb8c6&page=${this.state.page}&pageSize=${this.props.pageSize}`;
 
     let data = await fetch(url);
@@ -68,16 +75,17 @@ export default class News extends Component {
     this.setState({
       articles: parsedData.articles.concat(parsedData.articles),
       totalResults: parsedData.totalResults,
-      loading: false,
-      page:this.state.page+1
+      loading: false
   
+
     })
   };
 
   render() {
     return (
-      <div className='container my-3'>
-        <h2>NewsLite : Top HeadLine</h2>
+      <>
+
+        <h1 className='text-center'  style={{margin:"35px 0px"}}>NewsLite : Top {this.props.category.charAt(0).toUpperCase()+this.props.category.slice(1)} HeadLine</h1>
         
         <InfiniteScroll
                  dataLength={this.state.articles.length}
@@ -96,7 +104,7 @@ export default class News extends Component {
 
                 {/* display fixed amount  */}
                
-                <NewsItem title={element.title ? element.title.slice(0, 45) : ""} des={element.description ? element.description.slice(0, 88) : ""} imgUrl={element.urlToImage} newsUrl={element.url} author={element.author} date={element.publishedAt} />
+                <NewsItem title={element.title ? element.title.slice(0, 50) : ""} des={element.description ? element.description.slice(0, 88) : ""} imgUrl={element.urlToImage} newsUrl={element.url} author={element.author} date={element.publishedAt}/>
               </div>)
             })
             
@@ -105,12 +113,8 @@ export default class News extends Component {
 
         </div>
       </InfiniteScroll>
-       
-
-      </div>
-
-
-
+      
+      </>
     )
   }
 }
