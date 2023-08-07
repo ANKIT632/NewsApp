@@ -12,7 +12,7 @@ import LoadingBar from 'react-top-loading-bar'
 
 export default class App extends Component {
   apiKey=process.env.REACT_APP_API_KEY;
-  
+
   state={
     progress :0
   }
@@ -26,12 +26,12 @@ export default class App extends Component {
     return (
       <div>
         <Router>
+        <NavBar />
         <LoadingBar
         color='#f11946'
         progress={this.state.progress}
         
       />
-          <NavBar />
           <Switch>
             <Route exact path="/"> <News setProgress={this.setProgress} apiKey={this.apiKey} key="General" pageSize={6} country="in" category="general" /> </Route>
 
