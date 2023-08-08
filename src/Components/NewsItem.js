@@ -1,34 +1,34 @@
-import React, { Component } from 'react'
+import React from 'react'
 
-export class NewsItem extends Component {
+const NewsItem = (props) => {
 
-  render() {
 
-    let { title, des, imgUrl, newsUrl, author, date } = this.props;
 
-    return (
+  let { title, des, imgUrl, newsUrl, author, date } = props;
 
-      <div className='my-3'>
-        <div className="card">
-     
-          <img src={!imgUrl ? " https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRUlAUwSHd_yTBRL94_Wj0SYPfB_-IoMPwbDteQ3w0MFg&s" : imgUrl} className="card-img-top" alt="..." />
-          <div className="card-body">
-            <h5 className="card-title">{title}...</h5>
-            <p className="card-text">{des}...</p>
+  return (
 
-            {/*  new Date(date).toGMTString() convert iso format to GMT format */}
+    <div className='my-3'>
+      <div className="card">
 
-            <p className="card-text"><small className="text-muted">By {author ? author : "Unknown"} on {new Date(date).toGMTString()}</small></p>
+        <img src={!imgUrl ? " https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRUlAUwSHd_yTBRL94_Wj0SYPfB_-IoMPwbDteQ3w0MFg&s" : imgUrl} className="card-img-top" alt="..." />
+        <div className="card-body">
+          <h5 className="card-title">{title}...</h5>
+          <p className="card-text">{des}...</p>
 
-            {/* btn-sm (small size of button) */}
-            {/* target="_blank" open in new tab  */}
+          {/*  new Date(date).toGMTString() convert iso format to GMT format */}
 
-            <a rel="noreferrer" href={newsUrl} target="_blank" className="btn btn-sm btn-dark">Read More</a>
-          </div>
+          <p className="card-text"><small className="text-muted">By {author ? author : "Unknown"} on {new Date(date).toGMTString()}</small></p>
+
+          {/* btn-sm (small size of button) */}
+          {/* target="_blank" open in new tab  */}
+
+          <a rel="noreferrer" href={newsUrl} target="_blank" className="btn btn-sm btn-dark">Read More</a>
         </div>
       </div>
-    )
-  }
+    </div>
+  )
 }
+
 
 export default NewsItem
