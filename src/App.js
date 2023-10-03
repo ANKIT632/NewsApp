@@ -9,7 +9,7 @@ const App = () => {
   const apiKey = process.env.REACT_APP_API_KEY;
   const [progress, SetNewProgress] = useState(0);
 
-  // lodind bar top of nav
+  // loding bar top of nav
   const setProgress = (progress) => {
     SetNewProgress(progress)
   }

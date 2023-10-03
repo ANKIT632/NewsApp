@@ -1,20 +1,18 @@
 import React from 'react'
-
+import newsImg from '../image/news.jpg'
 const NewsItem = (props) => {
-
-
 
   let { title, des, imgUrl, newsUrl, author, date } = props;
 
   return (
 
     <div className='my-3'>
-      <div className="card">
+      <div className="card h-80">
 
-        <img src={!imgUrl ? " https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRUlAUwSHd_yTBRL94_Wj0SYPfB_-IoMPwbDteQ3w0MFg&s" : imgUrl} className="card-img-top" alt="..." />
+        <img src={!imgUrl ? newsImg : imgUrl} className="card-img-top" alt="..."  style={{height:"200px"}}/>
         <div className="card-body">
-          <h5 className="card-title">{title}...</h5>
-          <p className="card-text">{des}...</p>
+          <h5 className="card-title">{title.slice(0, 40)}...</h5>
+          <p className="card-text">{des.slice(0, 100)}...</p>
 
           {/*  new Date(date).toGMTString() convert iso format to GMT format */}
 

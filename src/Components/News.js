@@ -18,6 +18,7 @@ const News = (props) => {
       return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
+  
   const updateNews = async () => {
     props.setProgress(10)
     const url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.apiKey}&page=${page}&pageSize=${props.pageSize}`;
@@ -67,6 +68,8 @@ const News = (props) => {
 
       <h1 className='text-center' style={{ margin: "35px 0px", marginTop: '90px' }}>NewsLite : Top {capitalizeFirstLetter(props.category)} HeadLine</h1>
       {loading && <Spinner />}
+      
+
       <InfiniteScroll
         dataLength={articles.length}
         next={fetchMoreData}
@@ -84,7 +87,7 @@ const News = (props) => {
 
                   {/* display fixed amount  */}
 
-                  <NewsItem title={element.title ? element.title : ""} des={element.description ? element.description : ""} imgUrl={element.urlToImage} newsUrl={element.url} author={element.author} date={element.publishedAt} />
+                  <NewsItem title={element.title ? element.title : ""} des={element.description ? element.description : element.title.slice(0,100)} imgUrl={element.urlToImage} newsUrl={element.url} author={element.author} date={element.publishedAt} />
                 </div>)
               })
 
@@ -111,5 +114,10 @@ News.propTypes = {
   category: PropTypes.string,
 }
 
-export default News
-// Note page means Total number of page and pageSize means total number of item display per page
+export default News;
+
+// Note page means Total number of page and pageSize means total number of item display per page.
+// InfiniteScroll : take four arguments
+// datalength (define the length of data), next:(take function for next data),hasMore :(take condition),loading:(what show during loading). 
+  
+
