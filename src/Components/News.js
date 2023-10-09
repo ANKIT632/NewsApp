@@ -4,9 +4,10 @@ import NewsItem from './NewsItem'
 import Spinner from './Spinner';
 import PropTypes from 'prop-types'
 import InfiniteScroll from "react-infinite-scroll-component";
-
+import { apiKey } from './GetApiData';
+import axios from 'axios';
 const News = (props) => {
-
+ 
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true)
   const [page, setPage] = useState(1)
@@ -21,16 +22,17 @@ const News = (props) => {
   
   const updateNews = async () => {
     props.setProgress(10)
-    const url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.apiKey}&page=${page}&pageSize=${props.pageSize}`;
+    const url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${apiKey}&page=${page}&pageSize=${props.pageSize}`;
 
     setLoading(true)
 
-    let data = await fetch(url);
+    let data = await axios(url);
     props.setProgress(30);
-    let parsedData = await data.json();
     props.setProgress(70);
-    setArticles(parsedData.articles)
-    setTotalResults(parsedData.totalResults)
+
+   
+    setArticles(data.articles)
+    setTotalResults(data.totalResults)
     setLoading(false)
     props.setProgress(100);
 
@@ -52,7 +54,7 @@ const News = (props) => {
 
     setPage(page + 1)
 
-    const url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.apiKey}&page=${page}&pageSize=${props.pageSize}`;
+    const url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${apiKey}&page=${page}&pageSize=${props.pageSize}`;
 
     let data = await fetch(url);
     let parsedData = await data.json();

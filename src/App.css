@@ -36,3 +36,24 @@
     transform: rotate(360deg);
   }
 }
+
+.NavList{
+
+  border-radius:20px;
+  box-shadow:2px 2px 2px gray;
+}
+
+.FindBar{
+  border-radius:20px;
+
+}
+
+.Footer{
+  position: sticky;
+}
+
+.Navv{
+  
+  box-shadow:2px 2px 2px gray;
+
+}

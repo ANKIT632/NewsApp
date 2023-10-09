@@ -6,8 +6,8 @@ const NewsItem = (props) => {
 
   return (
 
-    <div className='my-3'>
-      <div className="card h-80">
+    <div className='my-3' style={{ boxShadow:" 4px 4px 6px gray" }}>
+      <div className="card ">
 
         <img src={!imgUrl ? newsImg : imgUrl} className="card-img-top" alt="..."  style={{height:"200px"}}/>
         <div className="card-body">
