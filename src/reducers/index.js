@@ -1,2 +1,0 @@
-import redcer from './reducer'
-
