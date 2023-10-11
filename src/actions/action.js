@@ -6,10 +6,10 @@ export  const fetchNewsRequest=()=>{
 
 };
 
-export const fetchNewsSuccess = (articles, totalResults,page) => {
+export const fetchNewsSuccess = (articles, totalResults,page,category) => {
     return {
       type: 'FETCH_NEWS_SUCCESS',
-      payload: { articles, totalResults,page },
+      payload: { articles, totalResults,page,category },
     };
   };
 
@@ -20,9 +20,12 @@ export const fetchNewsSuccess = (articles, totalResults,page) => {
   
       try {
         const response = await axios.get(url);
-        dispatch(fetchNewsSuccess(response.data.articles, response.data.totalResults,page));
+        console.log(response);
+        dispatch(fetchNewsSuccess(response.data.articles, response.data.totalResults,page,category));
       } catch (error) {
         console.log(error);
       }
     };
   };
+
+  
