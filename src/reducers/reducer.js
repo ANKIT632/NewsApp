@@ -5,6 +5,7 @@ const initialState = {
   totalResults: 0,
   loading: false,
   category: null,
+  page:1,
 };
 
 const newsReducer = (state = initialState, action) => {
@@ -12,22 +13,29 @@ const newsReducer = (state = initialState, action) => {
     case 'FETCH_NEWS_REQUEST':
       return { ...state, loading: true };
 
+      case 'clear':
+        return{...state,articles:[],page:1}
+
     case 'FETCH_NEWS_SUCCESS':
-      if (state.category === action.payload.category) {
+      if(state.page===2){
         return {
           ...state,
-          articles: [...state.articles, ...action.payload.articles],
+          articles:action.payload.articles,
           totalResults: action.payload.totalResults,
           loading: false,
-        };
-      } else {
-        return {
-          articles: action.payload.articles,
-          totalResults: action.payload.totalResults,
-          loading: false,
-          category: action.payload.category,
-        };
+          page:state.page+1,
+        }; 
       }
+
+    else{
+        return {
+          ...state,
+          articles:[...state.articles, ...action.payload.articles],
+          totalResults: action.payload.totalResults,
+          loading: false,
+          page:state.page+1,
+        };
+    }
 
     default:
       return state;

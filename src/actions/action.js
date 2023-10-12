@@ -16,16 +16,25 @@ export const fetchNewsSuccess = (articles, totalResults,page,category) => {
   export const fetchNews = (country,category,page,pageSize) => {
     return async (dispatch) => {
       dispatch(fetchNewsRequest());
+      console.log("page " +page)
       const url = `https://newsapi.org/v2/top-headlines?country=${country}&category=${category}&apiKey=${apiKey}&page=${page}&pageSize=${pageSize}`;
   
       try {
         const response = await axios.get(url);
         console.log(response);
         dispatch(fetchNewsSuccess(response.data.articles, response.data.totalResults,page,category));
-      } catch (error) {
+      }
+      
+      catch (error) {
         console.log(error);
       }
     };
   };
+
+export const clearPre=()=>{
+return{
+ type:'clear',
+}
+}
 
   

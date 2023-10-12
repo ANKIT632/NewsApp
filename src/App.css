@@ -49,13 +49,34 @@
 }
 
 .Footer{
-  position: sticky;
+  display: flex;
+  justify-content: center;
+  position: fixed;
   bottom: 0;
-  background-color: black ;
+  left: 0;
+  width: 100%;
+  background-color: #333; /* You can set your desired background color */
+  color: #fff; /* You can set your desired text color */
+height: 3rem;
+}
+
+.Footer h5, .Footer p {
+
+  margin-top: 0.5rem;
 }
 
 .Navv{
   
-  box-shadow:2px 2px 2px gray;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 
+}
+
+ .heading{
+    /* Center the text within the container */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Add a box shadow */
+  display: inline-block;   /* Make the heading inline-block to not take full width */
+  padding: 10px;          /* Add some padding for better visual separation */
+  border-radius: 5px;
+  margin-top: 82px;
+  margin-bottom: 25px;
 }

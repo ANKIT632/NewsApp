@@ -4,13 +4,12 @@ import Spinner from './Spinner';
 import PropTypes from 'prop-types';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchNews } from '../actions/action';
+import { fetchNews,clearPre } from '../actions/action';
 
 const News = (props) => {
   const dispatch = useDispatch();
   const articles = useSelector((state) => state.articles);
   const totalResults = useSelector((state) => state.totalResults);
-  const loading = useSelector((state) => state.loading);
   const [page, setPage] = useState(1);
 
   const capitalizeFirstLetter = (string) => {
@@ -26,20 +25,25 @@ const News = (props) => {
   };
 
   useEffect(() => {
+    dispatch(clearPre());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // Update when the page changes
+
+  useEffect(() => { 
+    console.log(page)
     updateNews();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page]); // Update when the page changes
+  }, [page]);
 
   return (
     <>
-      <h1 className="text-center" style={{ margin: "35px 0px", marginTop: '90px' }}>
-        NewsLite: Top {capitalizeFirstLetter(props.category)} Headlines
-      </h1>
-      {loading && <Spinner />}
+      <h3 className="text-center heading" >
+       NewsLite: Top {capitalizeFirstLetter(props.category)} Headlines
+      </h3>
 
       <InfiniteScroll
         dataLength={articles.length}
-        next={() => setPage(page + 1)} // Increment the page
+        next={() => setPage(page +1)} // Increment the page
         hasMore={articles.length < totalResults} // Check if there's more data to load
         loader={<Spinner />}
       >
