@@ -10,8 +10,8 @@ const NavBar = () => {
         <div className="container-fluid">
           <NavLink className="navbar-brand" to="/">NewsLite</NavLink>
           
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
+          <button className="navbar-toggler btn_c"  type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span className="navbar-toggler-icon"></span>
     </button>
 
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
@@ -26,10 +26,10 @@ const NavBar = () => {
               <li className="nav-item NavList"><NavLink className="nav-link " to="/technology">Technology</NavLink></li>
 
             </ul>
-            <form className="d-flex">
+            {/* <form className="d-flex">
               <input className="form-control me-2 FindBar" type="search" placeholder="Search News" aria-label="Search" />
               <button className="btn btn-outline-success FindBar" type="submit">Search</button>
-            </form>
+            </form> */}
           </div>
 
         </div>

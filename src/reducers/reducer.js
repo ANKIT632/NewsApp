@@ -17,17 +17,7 @@ const newsReducer = (state = initialState, action) => {
         return{...state,articles:[],page:1}
 
     case 'FETCH_NEWS_SUCCESS':
-      if(state.page===2){
-        return {
-          ...state,
-          articles:action.payload.articles,
-          totalResults: action.payload.totalResults,
-          loading: false,
-          page:state.page+1,
-        }; 
-      }
-
-    else{
+     
         return {
           ...state,
           articles:[...state.articles, ...action.payload.articles],
@@ -35,7 +25,7 @@ const newsReducer = (state = initialState, action) => {
           loading: false,
           page:state.page+1,
         };
-    }
+ 
 
     default:
       return state;
