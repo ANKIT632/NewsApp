@@ -1,2 +1,1 @@
-- newsApp
-- env  : ApiKey
+React NewsApp
