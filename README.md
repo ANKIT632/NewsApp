@@ -1,1 +1,1 @@
-React NewsApp
+NewsApp
